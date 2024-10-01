@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Container, CssBaseline } from '@mui/material';
 
-function App() {
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
+import Inicio from './components/Inicio/Inicio';
+import ListaProntuarios from './components/ProntuarioList/ProntuarioList';
+import ProntuarioApp from './components/ProntuarioFrom/ProntuarioFrom';  // Asumimos que este componente ya existe
+
+const App = () => {
+  const [vista, setVista] = useState('inicio');
+  const [prontuarios, setProntuarios] = useState([
+    { id: 1, nombre: 'Juan Pérez' },
+    { id: 2, nombre: 'María García' },
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CssBaseline />
+      <Navbar setVista={setVista} />
+      <Container component="main" sx={{ mt: 4, mb: 4 }}>
+        {vista === 'inicio' && <Inicio />}
+        {vista === 'nuevo' && <ProntuarioApp />}
+        {vista === 'lista' && <ListaProntuarios prontuarios={prontuarios} />}
+      </Container>
+      <Footer />
+    </>
   );
-}
+};
 
 export default App;
